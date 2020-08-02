@@ -12,8 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 const StripeCheckoutButton = ({ price,cartItems,currentUser,clearCart,history }) => {
   const priceForStripe = price * 100;
  // const publishableKey = 'pk_test_WBqax2FWVzS9QlpJScO07iuL';
-const publishableKey='pk_test_51HAFe7GYDT2VEC6r2YfijfRaZeKur07HBxdhCW2WAcPWwCzIhNjobMcKFC8vdPLJZSNZwWduUR7OrjvGOBGsp0VH00K7ejlQxK'
-
+const publishableKey='pk_test_51HAfK5ADrPvZgTNOPXq535T7z56sdWI2BZPxVA30kz89qczkzSXT7qkaQqOhmT17f72IL50rtoofVaDeBMmA0Ep600VZIXpmDd';
   const onToken = token => {
     var schedules=[]
     var id=Math.floor(Math.random() * 10000);
