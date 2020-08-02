@@ -2,12 +2,17 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
+const pino = require('pino');
+const expressPino = require('express-pino-logger');
 
+const logger = pino({ level: process.env.LOG_LEVEL || 'info' });
+const expressLogger = expressPino({ logger });
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
+app.use(expressLogger);
 const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
@@ -40,6 +45,7 @@ app.post('/api/payment', (req, res) => {
 
   stripe.charges.create(body, (stripeErr, stripeRes) => {
     if (stripeErr) {
+      logger.error('erorr occured'+stripeErr);
       res.status(500).send({ error: stripeErr });
     } else {
       res.status(200).send({ success: stripeRes });
