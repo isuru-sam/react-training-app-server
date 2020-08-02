@@ -39,7 +39,7 @@ app.get('/api/hello', (req, res) => {
 
 app.post('/api/payment', (req, res) => {
   const body = {
-    source: 'tok_visa',
+    source: process.env.NODE_ENV === 'production'?'tok_visa':req.body.token.id,
     amount: req.body.amount,
     currency: 'usd'
   };
