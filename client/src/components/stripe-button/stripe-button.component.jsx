@@ -40,7 +40,7 @@ cartItems.forEach(cartItem=>{
       method: 'post',
       data: {
         amount: priceForStripe,
-        token: 'tok_visa'
+        token: token
       }
     })
       .then(response => {
