@@ -43,3 +43,7 @@ app.post('/payment', (req, res) => {
     }
   });
 });
+
+//https://training-app-a2z.herokuapp.com/
+//a2ztechacademy
+//a2ztechacademy2000
