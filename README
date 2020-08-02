@@ -4,3 +4,6 @@
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
     "start": "node server.js",
     "heroku-postbuild": " npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+https://a2z-training-app-client.herokuapp.com/
+
+    https://a2z-training-app-server.herokuapp.com/

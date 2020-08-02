@@ -23,10 +23,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 */
-app.listen(port, error => {
-  if (error) throw error;
-  console.log('Server running on port ' + port);
-});
+
 
 app.get('/hello', (req, res) => {
   res.status(200).send({ success: "Hello" });
@@ -51,3 +48,8 @@ app.post('/payment', (req, res) => {
 //https://training-app-a2z.herokuapp.com/
 //a2ztechacademy
 //a2ztechacademy2000
+
+app.listen(port, error => {
+  if (error) throw error;
+  console.log('Server running on port ' + port);
+});
