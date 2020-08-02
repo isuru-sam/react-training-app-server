@@ -9,7 +9,8 @@ const logger = pino({ level: process.env.LOG_LEVEL || 'info' });
 const expressLogger = expressPino({ logger });
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const Stripe = require('stripe');
+const stripe = Stripe('sk_test_51HAfK5ADrPvZgTNOkXWqWu8tNOGxerM2SkHKft09Ot8x6jDh8RxuYvbquT8HYIkLAAC7drTSRKwCZc4OytzSuG3c00uASLLxQw');
 
 const app = express();
 app.use(expressLogger);
