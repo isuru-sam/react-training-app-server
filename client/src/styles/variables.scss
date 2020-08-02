@@ -1,0 +1,48 @@
+
+$primary_avatarin: #0066cc;
+$primary-variant_avatarin:#003e7d;
+$secondary_avatarin: #00ccff;
+$accent_avatarin: #ff5577;
+$error_avatarin: #b71c1c;
+$grey_avatarin:#fafafb;
+$black_avatarin:#1a1a1e;
+$grey_6a8: #a5a6a8;
+$white: #ffffff;
+$white_255_255_255_87: rgba(255, 255, 255, 0.87);
+$white_d1d: #1d1d1d;
+$gray_797: #979797;
+$gray_e6f: #6e6e6f;
+$black_0_0_0_6: rgba(0, 0, 0, 0.6);
+$gray_a9a: #9a9a9a;
+$gray_9f9: #f9f9f9;
+$black_842: #302842;
+$gray_7e7: #e7e7e7;
+$black_0_0_0_87: rgba(0, 0, 0, 0.87);
+$black_b21:#1c1b21;
+$black_539: #2a2539;
+$gray_282: #828282;
+
+:export{
+    primaryAvatarin: $primary_avatarin;
+    primaryVariantAvatarin: $primary-variant_avatarin;
+    secondaryAvatarin: $secondary_avatarin;
+    accentAvatarin: $accent_avatarin;
+    errorAvatarin: $error_avatarin;
+    grayAvatarin: $grey_avatarin;
+    blackAvatarin: $black_avatarin;
+    gray6A8: $grey_6a8;
+    white: $white;
+    white25587 :$white_255_255_255_87;
+    whiteD1d :$white_d1d;
+    gray797 :$gray_797;
+    grayE6f : $gray_e6f;
+    black06 : $black_0_0_0_6;
+    grayA9A : $gray_a9a;
+    gray9F9 : $gray_9f9;
+    blank842 : $black_842;
+    gray7E7 :$gray_7e7;
+    black087 :$black_0_0_0_87;
+    blackB21: $black_b21;
+    black539: $black_539;
+    gray282: $gray_282;
+}
