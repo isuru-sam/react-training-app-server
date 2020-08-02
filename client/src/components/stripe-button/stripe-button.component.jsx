@@ -37,7 +37,7 @@ cartItems.forEach(cartItem=>{
 
 
     axios({
-      url: 'payment',
+      url: '/api/payment',
       method: 'post',
       data: {
         amount: priceForStripe,
@@ -64,7 +64,7 @@ cartItems.forEach(cartItem=>{
       name='Test Ltd.'
       billingAddress
       shippingAddress
-      image='https://a2z-training-app-client.herokuapp.com/a2z.jpeg'
+      image='https://a2z-academy-app-server.herokuapp.com/a2z.jpeg'
       description={`Your total is $${price}`}
       amount={priceForStripe}
       panelLabel='Pay Now'

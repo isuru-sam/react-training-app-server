@@ -27,11 +27,11 @@ if (process.env.NODE_ENV === 'production') {
 
 
 
-app.get('/hello', (req, res) => {
+app.get('/api/hello', (req, res) => {
   res.status(200).send({ success: "Hello" });
 });
 
-app.post('/payment', (req, res) => {
+app.post('/api/payment', (req, res) => {
   const body = {
     source: req.body.token.id,
     amount: req.body.amount,
