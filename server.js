@@ -39,7 +39,7 @@ app.get('/api/hello', (req, res) => {
 
 app.post('/api/payment', (req, res) => {
   const body = {
-    source: req.body.token.id,
+    source: 'tok_visa',
     amount: req.body.amount,
     currency: 'usd'
   };
