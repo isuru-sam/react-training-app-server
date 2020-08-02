@@ -28,6 +28,10 @@ app.listen(port, error => {
   console.log('Server running on port ' + port);
 });
 
+app.get('/hello', (req, res) => {
+  res.status(200).send({ success: "Hello" });
+});
+
 app.post('/payment', (req, res) => {
   const body = {
     source: req.body.token.id,
