@@ -4,9 +4,19 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const pino = require('pino');
 const expressPino = require('express-pino-logger');
+const nodemailer = require('nodemailer'); 
 
 const logger = pino({ level: process.env.LOG_LEVEL || 'info' });
 const expressLogger = expressPino({ logger });
+
+let mailTransporter = nodemailer.createTransport({ 
+  service: 'gmail', 
+  auth: { 
+      user: 'a2ztechacademy@gmail.com', 
+      pass: 'A2ztechacademy2000'
+  } 
+}); 
+
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
 const Stripe = require('stripe');
@@ -49,11 +59,27 @@ app.post('/api/payment', (req, res) => {
      // logger.error('erorr occured'+stripeErr);
       res.status(500).send({ error: stripeErr });
     } else {
+      sendEmail();
       res.status(200).send({ success: stripeRes });
     }
   });
 });
 
+
+function sendEmail(){
+  let mailDetails = { 
+    from: 'a2ztechacademy@gmail.com', 
+    to: 'iisuru@gmail.com', 
+    subject: 'Test mail', 
+    text: 'Node.js testing mail for GeeksforGeeks'
+}; 
+  
+mailTransporter.sendMail(mailDetails, function(err, data) { 
+    if(err) { 
+        logger.error('Error in send email'+err); 
+    } 
+}); 
+}
 //https://training-app-a2z.herokuapp.com/
 //a2ztechacademy
 //a2ztechacademy2000

@@ -2,7 +2,8 @@ import { AppBar, Toolbar, Typography } from "@material-ui/core";
 
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
-import MenuIcon from '@material-ui/icons/Menu';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from "@material-ui/core/styles";
 import {ReactComponent as Logo} from '../../../assets/images/a2z.svg';
 import React from "react";
@@ -16,6 +17,7 @@ import './topMenuBar.scss';
 import CartIcon from '../../cart-icon/cart-icon.component.jsx'
 import CartDropdown from '../../cart-dropdown/cart-dropdown.component.jsx'
 import { createStructuredSelector } from 'reselect';
+import Box from '@material-ui/core/Box';
 
 
 import { selectCartHidden } from '../../../redux/cart/cart.selectors';
@@ -26,65 +28,75 @@ class TopMenuBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            anchorEl: null,
-            language: 'en',
-            lang: false
+            anchorEl: null
+          
         }
     }
 
     componentDidMount() {
-        const user = localStorage.getItem('user');
-        if (user) {
-            this.setState({
-                user: JSON.parse(user)
-            });
-        }
+      
     }
 
   
 
-    handleLanguage = event => {
-        let newLang = event.target.value;
-        this.setState({ language: newLang })
-        this.props.i18n.changeLanguage(newLang);
-    }
+     handleClick = (event) => {
+        this.setState({anchorEl:event.currentTarget});
+      };
+    
+       handleClose = () => {
+        this.setState({anchorEl:null});
+      };
+      handleCloseSchedules =() => {
+          this.props.history.push("/schedules")
+       this.setState({anchorEl:null});
+     };
 
-    handleMenu = (event) => {
-        this.setState({ anchorEl: event.currentTarget });
-    };
-
-    handleClose = () => {
-        this.setState({ anchorEl: null });
-    };
-
-    openLangSelector = () => {
-        // this.setState({ lang: true });
-    }
-
+     handleCloseLogOut =() => {
+        auth.signOut();
+        this.props.history.push('/')
+        //this.props.history.push("/schedules")
+     this.setState({anchorEl:null});
+   };
+   
     render() {
        
           const {history}=this.props;
      //   const classes = useStyles();
+     const {anchorEl}=this.state;
 const {currentUser,hidden} = this.props;
         return (
 
             <AppBar position="static">
             <Toolbar >
+            <Box display='flex'  flexGrow={1}>
                 <Logo className="logo"/>
-              <IconButton edge="start" className="classes.menuButton" color="inherit" aria-label="menu"  style={{ flex: 1 }}>
-              { //<MenuIcon />
-              }
-              </IconButton>
-              <Typography variant="h6" className="classes.title">
-                News
-              </Typography>
-              <Button  color="inherit"  onClick={(event) => {currentUser?history.push("/checkout"):history.push({pathname:'/signInRegister',customNameData:{msg:'Please login/register to checkout',open:true}})}}>Checkout</Button>
+              
+           </Box>
               <Button color="inherit" onClick={()=>history.push("/")}>Home</Button>
             {
-              currentUser ? <Button color="inherit" onClick={()=>auth.signOut()}>LogOut</Button> : <Button color="inherit" onClick={()=>history.push("/signInRegister")}>Login</Button>
+              currentUser ? '' : <Button color="inherit" onClick={()=>history.push("/signInRegister")}>Login</Button>
             }
+                 <Button   color="inherit"  onClick={(event) => {currentUser?history.push("/checkout"):history.push({pathname:'/signInRegister',customNameData:{msg:'Please login/register to checkout',open:true}})}}>Checkout</Button>
+         
             <CartIcon/>
-            
+            {
+
+            currentUser ?<Button aria-controls="simple-menu" color="inherit"  aria-haspopup="true" onClick={this.handleClick}>
+       My Account
+      </Button>:''
+            }
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={this.handleClose}
+      >
+        <MenuItem onClick={this.handleCloseSchedules}>Schedules</MenuItem>
+
+        <MenuItem onClick={this.handleCloseLogOut}>Logout</MenuItem>
+      </Menu>
+     
             <div>{
             hidden?null:<CartDropdown/>
             }
