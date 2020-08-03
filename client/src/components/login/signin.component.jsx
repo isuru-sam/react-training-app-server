@@ -3,6 +3,8 @@ import './signin.component.scss'
 import {signInWithGoogle,auth} from '../firebase/firebase.utils.js'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import Link from '@material-ui/core/Link';
+import {withRouter} from 'react-router-dom'
 //import { auth } from "firebase";
 //import courseData from './courseList.data.js'
 class  SignIn extends React.Component
@@ -43,6 +45,7 @@ render() {
         margin: 15,
        };
        const {email,password}=this.state;
+   
 return <div className="signin-register">
 <h1>Login</h1>
 <TextField name="email"  value={email} autoComplete="off"
@@ -60,7 +63,11 @@ return <div className="signin-register">
              <br/>
              <Button variant="contained" color="primary" style={style} onClick={(event) => this.handleClick(event)}>Login</Button>
              <Button variant="contained" color="primary" style={style} onClick={signInWithGoogle}>LoginWithGoogle</Button>
+             <br/>
+             <Link href="#"  style={style} onClick={()=>this.props.history.push('/updatepassword')}>
+        Reset/Forgot Password
+      </Link>
 </div>
 }
 }
-export default SignIn;
+export default withRouter(SignIn);

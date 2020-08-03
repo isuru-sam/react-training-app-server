@@ -4,18 +4,22 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const pino = require('pino');
 const expressPino = require('express-pino-logger');
-const nodemailer = require('nodemailer'); 
-
+//const nodemailer = require('nodemailer'); 
+//import transporter JS file
+const mail = require('./mails');
 const logger = pino({ level: process.env.LOG_LEVEL || 'info' });
 const expressLogger = expressPino({ logger });
+var nodemailer = require('nodemailer');
 
-let mailTransporter = nodemailer.createTransport({ 
-  service: 'gmail', 
-  auth: { 
-      user: 'a2ztechacademy@gmail.com', 
-      pass: 'A2ztechacademy2000'
-  } 
-}); 
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'iisuru.sam@gmail.com',
+    pass: 'Srilanka2000'
+  }
+});
+
+
 
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
@@ -59,26 +63,40 @@ app.post('/api/payment', (req, res) => {
      // logger.error('erorr occured'+stripeErr);
       res.status(500).send({ error: stripeErr });
     } else {
-      sendEmail();
+      sendEmail(req.body.schedules,req.body.amount);
       res.status(200).send({ success: stripeRes });
     }
   });
 });
 
+function sendMailGmail(){
 
-function sendEmail(){
-  let mailDetails = { 
-    from: 'a2ztechacademy@gmail.com', 
-    to: 'iisuru@gmail.com', 
-    subject: 'Test mail', 
-    text: 'Node.js testing mail for GeeksforGeeks'
-}; 
-  
-mailTransporter.sendMail(mailDetails, function(err, data) { 
-    if(err) { 
-        logger.error('Error in send email'+err); 
-    } 
-}); 
+}
+function sendEmail(schedules,amount){
+  var html='Dear Student,<BR/><B>You did a schedule booking as follow</B>'
+  var email='';
+ html+='<Table><tr><th>Course</th><th>Date</th><th>From</th><th>To</th><th>Price(USD)</th></tr>'
+  schedules.forEach(function(sc){
+    html+='<tr><td>'+sc.course+'</td><td>'+sc.date+'</td><td>'+sc.fromTime+'</td><td>'+sc.toTime+'</td><td>'+sc.price+'</td></tr>';
+    email=sc.email;
+  });
+  html+='</table>'
+  html+='<br/><B>Total is:'+amount/100+' USD</B>'
+  html+='<br/>Thank You.<br/>A2ZAcadamey Team'
+
+  let mailOptions = {
+    from: "a2ztechacademy@gmail.com",
+    to: email,
+    subject: "Your schedule confirmed with A2ZAcademy",
+    text: "Hello",
+    html: html
+}
+
+transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    logger.error(error);
+  } 
+});
 }
 //https://training-app-a2z.herokuapp.com/
 //a2ztechacademy

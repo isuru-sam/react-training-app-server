@@ -28,7 +28,8 @@ class TopMenuBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            anchorEl: null
+            anchorEl: null,
+            anchorEl2:null
           
         }
     }
@@ -42,13 +43,21 @@ class TopMenuBar extends React.Component {
      handleClick = (event) => {
         this.setState({anchorEl:event.currentTarget});
       };
+
+      handleClick2 = (event) => {
+        this.setState({anchorEl2:event.currentTarget});
+      };
     
        handleClose = () => {
         this.setState({anchorEl:null});
       };
+      handleClose2 = () => {
+        this.setState({anchorEl2:null});
+      };
       handleCloseSchedules =() => {
+        this.setState({anchorEl:null});
           this.props.history.push("/schedules")
-       this.setState({anchorEl:null});
+      
      };
 
      handleCloseLogOut =() => {
@@ -57,12 +66,26 @@ class TopMenuBar extends React.Component {
         //this.props.history.push("/schedules")
      this.setState({anchorEl:null});
    };
+
+   handleCloseAbout =() => {
+   // console.log('about')
+      this.props.history.push("/about");
+      this.setState({anchorEl2:null});
+  
+ };
+
+ handleCloseHelp =() => {
+//console.log('help')
+    this.props.history.push("/help");
+    this.setState({anchorEl2:null});
+
+};
    
     render() {
        
           const {history}=this.props;
      //   const classes = useStyles();
-     const {anchorEl}=this.state;
+     const {anchorEl,anchorEl2}=this.state;
 const {currentUser,hidden} = this.props;
         return (
 
@@ -73,11 +96,27 @@ const {currentUser,hidden} = this.props;
               
            </Box>
               <Button color="inherit" onClick={()=>history.push("/")}>Home</Button>
+              <Button aria-controls="about-menu" color="inherit"  aria-haspopup="true" onClick={this.handleClick2}>
+       About
+      </Button>
+
+      <Menu
+        id="about-menu"
+        anchorEl={anchorEl2}
+        keepMounted
+        open={Boolean(anchorEl2)}
+        onClose={this.handleClose2}
+      >
+        <MenuItem onClick={this.handleCloseAbout}>About</MenuItem>
+
+        <MenuItem onClick={this.handleCloseHelp}>Help</MenuItem>
+      </Menu>
+              <Button   color="inherit"  onClick={(event) => {currentUser?history.push("/checkout"):history.push({pathname:'/signInRegister',customNameData:{msg:'Please login/register to checkout',open:true}})}}>Checkout</Button>
+         
             {
               currentUser ? '' : <Button color="inherit" onClick={()=>history.push("/signInRegister")}>Login</Button>
             }
-                 <Button   color="inherit"  onClick={(event) => {currentUser?history.push("/checkout"):history.push({pathname:'/signInRegister',customNameData:{msg:'Please login/register to checkout',open:true}})}}>Checkout</Button>
-         
+               
             <CartIcon/>
             {
 
@@ -96,6 +135,8 @@ const {currentUser,hidden} = this.props;
 
         <MenuItem onClick={this.handleCloseLogOut}>Logout</MenuItem>
       </Menu>
+
+     
      
             <div>{
             hidden?null:<CartDropdown/>

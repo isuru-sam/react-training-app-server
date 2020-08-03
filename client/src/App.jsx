@@ -11,6 +11,9 @@ import {connect} from 'react-redux'
 import './App.css'
 import setCurrentUser from './redux/user/user.actions.js'
 import CheckoutPage from './views/checkout/checkout.component.jsx'
+import UpdatePassword  from './components/login/updatepassword.component'
+import About from './components/abouthelp/about.component'
+import Help from './components/abouthelp/help.component'
 import courseData from './components/courseList/courseList.data'
 const ItemListPage = lazy(()=>import('./views/itemList/itemList.jsx'))
 class  App extends React.Component{
@@ -51,8 +54,14 @@ render(){ return <div>
   
   <Route exact path="/courseDescription/:id" component={CourseDescription}/>
   <Route exact path="/checkout" component={CheckoutPage}/>
+ 
+
+
   <Route exact path="/schedules" component={Schedules}/>
   <Route exact path="/signInRegister"  render={()=>this.props.currentUser?(<Redirect to="/"/>):<SignInRegister/>}/>
+  <Route exact path="/updatepassword" component={UpdatePassword}/>
+  <Route exact path="/about" component={About}/>
+  <Route exact path="/help" component={Help}/>
   </Suspense>
 </Switch>
 <Footer/>

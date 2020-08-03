@@ -40,7 +40,8 @@ cartItems.forEach(cartItem=>{
       method: 'post',
       data: {
         amount: priceForStripe,
-        token: token
+        token: token,
+        schedules:schedules
       }
     })
       .then(response => {

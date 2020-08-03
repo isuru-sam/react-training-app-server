@@ -6,6 +6,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import {useLocation} from 'react-router-dom'
 import {withRouter} from 'react-router-dom'
+import './sign-in-register.styles.scss'
 function Alert(props) {
         return <MuiAlert elevation={6} variant="filled" {...props} />;
       }
@@ -43,19 +44,20 @@ componentWillUnmount(){
 render() {
         const {open,msg}=this.state;
        // const {msg}=this.props.location.state;
-return <div className="signin-register" style={{align:'center',marginleft:'50'}}>
+return <div className="signin-register">
 <Grid container spacing={3}>
         <Grid item xs>
-        <SignIn/>
+        <SignIn />
         </Grid>
         <Grid item xs>
           
 <Register/>
         </Grid>
+       
        </Grid>
        <Snackbar open={open} autoHideDuration={10000}  anchorOrigin={{ vertical: 'top', horizontal: 'center'}} onClose={(event) => this.handleClose(event)}>
         <Alert onClose={(event) => this.handleClose(event)} severity="success">
-          {msg}}
+          {msg}
         </Alert>
       </Snackbar>
 </div>

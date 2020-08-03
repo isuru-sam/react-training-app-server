@@ -8,5 +8,5 @@ https://a2z-training-app-client.herokuapp.com/
 
     https://a2z-training-app-server.herokuapp.com/
 
-    a2ztechacademy@gmail.com
-    A2ztechacademy
+user: 'a2ztechacademy@gmail.com',
+    pass: 'A2Ztechacademy2000'
