@@ -9,6 +9,7 @@ import MuiAlert from '@material-ui/lab/Alert';
 import 'date-fns';
 import TextField from '@material-ui/core/TextField';
 import moment from 'moment'
+import {firestore} from '../firebase/firebase.utils'
 import {connect} from 'react-redux'
 import { createStructuredSelector } from 'reselect';
 import {addItem} from '../../redux/cart/cart.actions.js'
@@ -18,6 +19,7 @@ import nextId from "react-id-generator";
 import CourseRequirements from './courseRequirements'
 
 import {selectCourses} from '../../redux/course/course.selectors'
+import {selectCartItems} from '../../redux/cart/cart.selectors'
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
@@ -49,9 +51,140 @@ const materialDateInput = `${year}-${month}-${date}`;
 
 
 
-    this.state={courseData:[],open:false,date:materialDateInput,selectedDate:materialDateInput,fromTime:'07:00',toTime:'09:00'};
+    this.state={courseData:[],open:false,error:false,date:materialDateInput,selectedDate:materialDateInput,fromTime:'07:00',toTime:'09:00'};
     
 //this.course=courseData.filter((c) => task.duration >= 120 );
+}
+
+validateSchedule=async event=>{
+  event.preventDefault();
+  const {selectedDate,fromTime,toTime,courseData}=this.state;
+
+ console.log('date is'+selectedDate)
+  let dateTimeA = moment(selectedDate + ' ' + fromTime, 'YYYY-MM-DD HH:mm');
+  let dateTimeB = moment(selectedDate + ' ' + toTime, 'YYYY-MM-DD HH:mm');
+  if(dateTimeA>=dateTimeB){
+    this.setState({
+      message:'From Time is greater than  to Time',
+      error:true
+    })
+    return;
+  }
+  const courseCollectionref=  firestore.collection('schedules').where("date", "==", selectedDate)
+  var schedulestmp = [];
+  var i=0;
+  this.unsub=courseCollectionref.onSnapshot(snapshot=> {
+    let overlap=false
+      snapshot.forEach(doc=> {
+          //console.log(doc.data())
+          var tmp={
+       
+             
+              ...doc.data()
+            
+
+          }
+          let dateTimeAD= moment(tmp.date + ' ' + tmp.fromTime, 'YYYY-MM-DD HH:mm');
+          let dateTimeBD = moment(tmp.date + ' ' + tmp.toTime, 'YYYY-MM-DD HH:mm');
+         
+          if(dateTimeA>dateTimeAD && dateTimeA<dateTimeBD){
+          overlap=true
+          }
+          if(dateTimeB>dateTimeAD && dateTimeB<dateTimeBD){
+            overlap=true
+            }
+            if(dateTimeA<=dateTimeAD && dateTimeB>=dateTimeBD){
+              overlap=true
+              }
+              if(overlap) {
+         // console.log(tmp.date)
+         // schedulestmp.push(tmp);
+              }
+
+             
+
+      });
+//let overlapc=false;
+this.props.cartItems.forEach(cartItem=>{
+  let dateTimeAC= moment(cartItem.date + ' ' + cartItem.fromTime, 'YYYY-MM-DD HH:mm');
+  let dateTimeBC = moment(cartItem.date + ' ' + cartItem.toTime, 'YYYY-MM-DD HH:mm');
+  if(dateTimeA>dateTimeAC && dateTimeA<dateTimeBC){
+    //console.log(1)
+    overlap=true
+    }
+    if(dateTimeB>dateTimeAC && dateTimeB<dateTimeBC){
+     // console.log(2)
+      overlap=true
+      }
+      if(dateTimeA<=dateTimeAC && dateTimeB>=dateTimeBC){
+        //console.log(3)
+        overlap=true
+        }
+})
+
+
+      if(overlap){
+        this.setState({
+          error:true,
+          message:'Selected schdule overlaps with existing schedule',
+        })
+        return;
+      }
+let valid=true;
+      const day = dateTimeA.isoWeekday() ; // Monday ... Sunday
+      //console.log('da'+day)
+      const isWeekend = (day === 6 || day === 0);  
+      if(isWeekend){
+      //  console.log('weekend')
+      if(fromTime<'08:00' || fromTime>'23:00' || toTime<'08:00' || toTime>'23:00'){
+     valid=false;
+      }
+      } else {
+        if(fromTime<'18:00' || fromTime>'23:00' || toTime<'18:00' || toTime>'23:00'){
+          valid=false;
+           }
+      }
+
+
+
+      if(!valid){
+        this.setState({
+          error:true,
+          message:'Week Days 6PM-11PM and WeenEnds 8AM to 11PM only '
+        })
+        return;
+      }
+//=======================normal flow
+let datetimeC = dateTimeB.diff(dateTimeA, 'minutes');
+let hours =(Math.floor((datetimeC)/60))
+let mins= (datetimeC)%60
+let totalmins=datetimeC
+let item={
+    id:uuidv4(),
+    date:selectedDate,
+    fromTime:fromTime,
+    toTime:toTime,
+    mins:mins,
+    totalmins:totalmins,
+    courseData:courseData,
+    hours:hours
+}
+this.props.addItem(item)
+    
+
+
+    //const {courseData,date,fromTime,toTime,hours,minutes,totalMinutes}=this.state;
+console.log(item);
+this.setState({
+  open:true
+})
+
+//=================
+
+
+    })
+//console.log('here'+schedulestmp.length)
+    
 }
 handleClick=async event => {
     event.preventDefault();
@@ -59,6 +192,8 @@ handleClick=async event => {
    console.log('here')
 
    const {date,fromTime,toTime,courseData}=this.state;
+
+ 
    let dateTimeA = moment(date + ' ' + fromTime, 'YYYY-MM-DD HH:mm');
    let dateTimeB = moment(date + ' ' + toTime, 'YYYY-MM-DD HH:mm');
  
@@ -106,6 +241,15 @@ componentDidMount(){
     })
   };
 
+  handleCloseError = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    this.setState({
+        error:false
+    })
+  };
   calculateTimes(){
     //this.state = {startDate:1519026163000, timeEnd:1519126755000} // example
 
@@ -150,7 +294,7 @@ render() {
     const {history}=this.props
     const { match: { params } } = this.props;
     console.log(params.id);
-    const {open,selectedDate,courseData}=this.state;
+    const {message,error,open,selectedDate,courseData}=this.state;
     
     return <div className="coursetitle-list">
       <Grid container spacing={3}>
@@ -171,6 +315,8 @@ render() {
     </div>
     <div> <br/>
       <h3>Pick a date and time to schedule</h3>
+      <Grid container spacing={3}>
+      <Grid item xs>
     <TextField
     id="date"
     label="Date"
@@ -183,6 +329,8 @@ render() {
       shrink: true,
     }}
   />
+ </Grid>
+ <Grid item xs>
    <TextField
     id="time"
     label="From"
@@ -197,6 +345,8 @@ render() {
       step: 300, // 5 min
     }}
   />
+  </Grid>
+  <Grid item xs>
    <TextField
     id="time"
     label="To"
@@ -211,19 +361,29 @@ render() {
       step: 300, // 5 min
     }}
   />
+  </Grid>
+  </Grid>
   </div>
   <div><br/>
-    <Button type="submit" variant="contained" color="primary"  onClick={(event) => this.handleClick(event)}>Add To Cart</Button>
+    <Button type="submit" variant="contained" color="primary"  onClick={(event) => this.validateSchedule(event)}>Add To Cart</Button>
     
     <Snackbar open={open} autoHideDuration={3000}  anchorOrigin={{ vertical: 'top', horizontal: 'center'}} onClose={(event) => this.handleClose(event)}>
         <Alert onClose={(event) => this.handleClose(event)} severity="success">
           Item added succesfully
         </Alert>
       </Snackbar>
+
+      <Snackbar open={error} autoHideDuration={10000}   anchorOrigin={{ vertical: 'top', horizontal: 'center'}} onClose={(event) => this.handleCloseError(event)}>
+        <Alert onClose={(event) => this.handleCloseError(event)} severity="error" >
+       {message}
+          
+        </Alert>
+      </Snackbar>
+
     </div>
     </Grid>
     <Grid  item xs>
-<CourseRequirements hourlyRate="12USD"/>
+<CourseRequirements hourlyRate={courseData.hourlyRate+"USD"}/>
     </Grid>
     </Grid>
     </div>
@@ -235,8 +395,8 @@ const mapDispatchToProps=dispatch=>({
 })
 
 const mapStateToProps = createStructuredSelector({
-  courses: selectCourses
-
+  courses: selectCourses,
+  cartItems: selectCartItems
 });
 
 export default connect(mapStateToProps,mapDispatchToProps) (withRouter(CourseDescription));
