@@ -335,7 +335,7 @@ render() {
     id="time"
     label="From"
     type="time"
-    defaultValue="07:00"
+    defaultValue="08:00"
   //  className={classes.textField}
   onChange={e=>this.handleFromTimeChange(e)}
     InputLabelProps={{
@@ -351,7 +351,7 @@ render() {
     id="time"
     label="To"
     type="time"
-    defaultValue="09:00"
+    defaultValue="10:00"
     onChange={e=>this.handleToTimeChange(e)}
     //className={classes.textField}
     InputLabelProps={{

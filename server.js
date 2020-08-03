@@ -14,8 +14,10 @@ var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'iisuru.sam@gmail.com',
-    pass: 'Srilanka2000'
+   // user: 'iisuru.sam@gmail.com',
+    //pass: 'Srilanka2000'
+    user:'a2ztechacademy@gmail.com',
+    pass:'A2ztechacademy2000'
   }
 });
 
@@ -82,7 +84,7 @@ function sendEmail(schedules,amount){
   });
   html+='</table>'
   html+='<br/><B>Total is:'+amount/100+' USD</B>'
-  html+='<br/>Thank You.<br/>A2ZAcadamey Team'
+  html+='<br/>Thank You.<br/>A2ZAcademy Team'
 
   let mailOptions = {
     from: "a2ztechacademy@gmail.com",
