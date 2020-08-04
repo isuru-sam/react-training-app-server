@@ -42,9 +42,9 @@ const CourseRequirements = ({hourlyRate}) => {
 <div>
 <h3>Support or Questions</h3>
 <ul>
-<li>Mobile/WhatsApp : 071666666</li>
-<li>Email:a2z@gmail.com</li>
-<li>Skype:a2z</li>
+<li>Mobile/WhatsApp : 077777777</li>
+<li>Email:a2ztechacademy@gmail.com</li>
+<li>Skype:a2ztechacademy</li>
 
 </ul>
 </div>
