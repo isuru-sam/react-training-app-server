@@ -15,7 +15,7 @@ class Footer extends React.Component {
         const currentYear = new Date().getFullYear();
         return (
             <div className="footer">
-              <p className="footerbottom"> www.a2ztechacademy.com 2020</p>
+              <p className="footerbottom">Copyright © 2020  www.a2ztechacademy.com</p>
             </div>
         );
     }
