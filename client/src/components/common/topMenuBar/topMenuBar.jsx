@@ -5,14 +5,14 @@ import Button from "@material-ui/core/Button";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from "@material-ui/core/styles";
-import {ReactComponent as Logo} from '../../../assets/images/a2z.svg';
+import {ReactComponent as Logo} from '../../../assets/images/a2zlogo.svg';
 import React from "react";
 import {withRouter} from 'react-router-dom'
 import {auth} from '../../firebase/firebase.utils.js'
 import {connect} from 'react-redux'
 // import Link from '@material-ui/core/Link';
 // import LangSwithcher from '../languageSwitcher';
-import styles from "./styles";
+//import styles from "./styles";
 import './topMenuBar.scss';
 import CartIcon from '../../cart-icon/cart-icon.component.jsx'
 import CartDropdown from '../../cart-dropdown/cart-dropdown.component.jsx'
@@ -165,5 +165,5 @@ const mapStateToProps = createStructuredSelector({
   });
   
 
-export default connect(mapStateToProps)(withRouter((withStyles(styles)(TopMenuBar))));
+export default connect(mapStateToProps)(withRouter(((TopMenuBar))));
 //export default connect(mapStateToProps, { signOut })(withTranslation('translations')(TopMenuBarStyles));
