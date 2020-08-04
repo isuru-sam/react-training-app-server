@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './help.styles.scss'
 const Help=()=>{
 
     return <div className="help">

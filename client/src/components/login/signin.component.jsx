@@ -5,8 +5,13 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import {withRouter} from 'react-router-dom'
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 //import { auth } from "firebase";
 //import courseData from './courseList.data.js'
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 class  SignIn extends React.Component
 {
 constructor(){
@@ -14,6 +19,8 @@ constructor(){
     this.state={
         email:'',
         password:''
+        ,
+        error:false,message:'',
         }
 }
 
@@ -22,6 +29,15 @@ handleChange = event => {
 
   this.setState({ [name]: value });
   console.log(value);
+};
+handleCloseError = (event, reason) => {
+  if (reason === 'clickaway') {
+    return;
+  }
+
+  this.setState({
+      error:false
+  })
 };
 handleClick= async event=>{
   event.preventDefault();
@@ -32,7 +48,11 @@ try{
 await auth.signInWithEmailAndPassword(email,password);
 console.log('loggedin')
 }catch(e){
-console.log(e)
+  this.setState({
+    error:true,
+    message:'UserNameor Password is incorrect.Please try again'
+  })
+  
 }
 
 
@@ -44,7 +64,7 @@ render() {
     const style = {
         margin: 15,
        };
-       const {email,password}=this.state;
+       const {email,password,error,message}=this.state;
    
 return <div className="signin-register">
 <h1>Login</h1>
@@ -67,6 +87,12 @@ return <div className="signin-register">
              <Link href="#"  style={style} onClick={()=>this.props.history.push('/updatepassword')}>
         Reset/Forgot Password
       </Link>
+      <Snackbar open={error} autoHideDuration={5000}   anchorOrigin={{ vertical: 'top', horizontal: 'center'}} onClose={(event) => this.handleCloseError(event)}>
+        <Alert onClose={(event) => this.handleCloseError(event)} severity="error" >
+       {message}
+          
+        </Alert>
+      </Snackbar>
 </div>
 }
 }

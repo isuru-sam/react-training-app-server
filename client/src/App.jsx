@@ -46,7 +46,7 @@ componentWillUnmount(){
 }
 // currentUser={this.state.currentUser}
 
-render(){ return <div>
+render(){ return <div className="main">
     <TopNavBar />
 <Switch>
   <Suspense fallback={<div>...Loading</div>}>
