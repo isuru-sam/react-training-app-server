@@ -12,7 +12,7 @@ const CourseItem=({title,desc,imageUrl,id, subSections})=>(
 className="course-item">
 <div className="content">
     <h1 className="course"><Link to={`/courseDescription/${id}`} >{title}</Link></h1>
-    <span className="desc">{desc}</span>
+    
 </div>
 </div>
 

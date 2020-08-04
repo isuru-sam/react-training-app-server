@@ -21,9 +21,7 @@ class Footer extends React.Component {
     }
 }
 
-Footer.propTypes = {
-    classes: PropTypes.object.isRequired
-}
+
 
 //onst FooterStyles = withStyles(styles)(Footer);
 

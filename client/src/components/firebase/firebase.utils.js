@@ -5,14 +5,15 @@ import 'firebase/firestore'
 
 
 var firebaseConfig = {
-    apiKey: "AIzaSyBqL53LDG7iqkBJ5XCOQzPM-Buk_elfFJk",
-    authDomain: "training-app-ca560.firebaseapp.com",
-    databaseURL: "https://training-app-ca560.firebaseio.com",
-    projectId: "training-app-ca560",
-    storageBucket: "training-app-ca560.appspot.com",
-    messagingSenderId: "653515251570",
-    appId: "1:653515251570:web:a2f880209d27764911c7eb"
-  };
+  apiKey: "AIzaSyBzqdMQtbEYPHN6-Q1HjWBY7yr2p1c4PfI",
+  authDomain: "a2ztechacademy-63ad8.firebaseapp.com",
+  databaseURL: "https://a2ztechacademy-63ad8.firebaseio.com",
+  projectId: "a2ztechacademy-63ad8",
+  storageBucket: "a2ztechacademy-63ad8.appspot.com",
+  messagingSenderId: "558078967609",
+  appId: "1:558078967609:web:6365740c23e4d0560732e8",
+  measurementId: "G-FRS1B5W0DS"
+};
   export const createUserProfileDocument = async (userAuth, additionalData) => {
     if (!userAuth) return;
   

@@ -6,7 +6,7 @@ import {fetchCoursesSuccess,fetchCoursesFailure} from './course.actions'
 export function getCourseData(snapshot){
     var cdata=[];
     snapshot.docs.map(doc=>{cdata.push(doc.data())})
-    cdata.sort((a, b) => a.id - b.id)
+    cdata.sort((a, b) => a.loc - b.loc)
     return cdata;
 }
 

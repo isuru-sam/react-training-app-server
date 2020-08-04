@@ -33,12 +33,12 @@ componentDidMount(){
           
         });
 
-        console.log(this.state);
+        console.log('lll'+this.state);
       });
     }
 
     setCurrentUser( userAuth );
-    //addCollectionData('courses',courseData)
+   //addCollectionData('courses',courseData)
   });
 }
 componentWillUnmount(){
