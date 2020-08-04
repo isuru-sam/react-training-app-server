@@ -37,9 +37,9 @@ return <div className="course-list">
 <Grid container spacing={3}>
 {
     
-    this.props.courses.map(({course,desc,imageUrl,id,subSections})=>
+    this.props.courses.map(({course,desc,imageUrl,id,subSections,hourlyRate})=>
     (<Grid item xs={4} key={id}>
-        <CourseItem key={id} title={course} desc={desc} imageUrl={imageUrl} id={id} subSections={subSections}/>
+        <CourseItem key={id} hourlyRate={hourlyRate} title={course} desc={desc} imageUrl={imageUrl} id={id} subSections={subSections}/>
         </Grid>))
 
 }
