@@ -84,10 +84,10 @@ function sendEmail(schedules,amount){
   html+='</table>'
   html+='<br/><B>Total is:'+amount/100+' USD</B>'
   html+='<br/>Thank You.<br/>A2ZAcademy Team'
-
+  var testemails=[email,'iisuru@gmail.com'];
   let mailOptions = {
     from: "a2ztechacademy@gmail.com",
-    to: email,
+    to: testemails,
     subject: "Your schedule confirmed with A2ZAcademy",
     text: "Hello",
     html: html

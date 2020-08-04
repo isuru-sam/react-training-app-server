@@ -51,7 +51,7 @@ const materialDateInput = `${year}-${month}-${date}`;
 
 
 
-    this.state={courseData:[],open:false,error:false,date:materialDateInput,selectedDate:materialDateInput,fromTime:'07:00',toTime:'09:00'};
+    this.state={courseData:[],open:false,error:false,date:materialDateInput,selectedDate:materialDateInput,fromTime:'20:00',toTime:'22:00'};
     
 //this.course=courseData.filter((c) => task.duration >= 120 );
 }
@@ -60,9 +60,11 @@ validateSchedule=async event=>{
   event.preventDefault();
   const {selectedDate,fromTime,toTime,courseData}=this.state;
 
- console.log('date is'+selectedDate)
+ console.log('date is'+selectedDate+":"+fromTime+":"+toTime)
   let dateTimeA = moment(selectedDate + ' ' + fromTime, 'YYYY-MM-DD HH:mm');
   let dateTimeB = moment(selectedDate + ' ' + toTime, 'YYYY-MM-DD HH:mm');
+  console.log('date is'+dateTimeA) 
+  console.log('date is'+dateTimeB)
   if(dateTimeA>=dateTimeB){
     this.setState({
       message:'From Time is greater than  to Time',
@@ -136,11 +138,11 @@ let valid=true;
       const isWeekend = (day === 6 || day === 0);  
       if(isWeekend){
       //  console.log('weekend')
-      if(fromTime<'08:00' || fromTime>'23:00' || toTime<'08:00' || toTime>'23:00'){
+      if(fromTime<'08:00' || fromTime>'22:00' || toTime<'08:00' || toTime>'22:00'){
      valid=false;
       }
       } else {
-        if(fromTime<'18:00' || fromTime>'23:00' || toTime<'18:00' || toTime>'23:00'){
+        if(fromTime<'20:00' || fromTime>'22:00' || toTime<'20:00' || toTime>'22:00'){
           valid=false;
            }
       }
@@ -150,10 +152,18 @@ let valid=true;
       if(!valid){
         this.setState({
           error:true,
-          message:'Week Days 6PM-11PM and WeenEnds 8AM to 11PM only '
+          message:'Week Days 8PM-10PM and WeekEnds 8AM to 11PM only '
         })
         return;
       }
+    var daylater=  moment(new Date()).add(1, 'days').toDate()
+    if(dateTimeA<daylater){
+      this.setState({
+        error:true,
+        message:'Booking should be done at least 24 hours before scheduled date'
+      })
+      return;
+    }
 //=======================normal flow
 let datetimeC = dateTimeB.diff(dateTimeA, 'minutes');
 let hours =(Math.floor((datetimeC)/60))
@@ -335,7 +345,7 @@ render() {
     id="time"
     label="From"
     type="time"
-    defaultValue="08:00"
+    defaultValue="20:00"
   //  className={classes.textField}
   onChange={e=>this.handleFromTimeChange(e)}
     InputLabelProps={{
@@ -351,7 +361,7 @@ render() {
     id="time"
     label="To"
     type="time"
-    defaultValue="10:00"
+    defaultValue="22:00"
     onChange={e=>this.handleToTimeChange(e)}
     //className={classes.textField}
     InputLabelProps={{
