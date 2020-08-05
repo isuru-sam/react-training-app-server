@@ -70,9 +70,14 @@ app.post('/api/payment', (req, res) => {
   });
 });
 
-function sendMailGmail(){
 
-}
+app.post('/api/save', (req, res) => {
+  sendSaveEmail(req.body.schedules,req.body.amount);
+  res.status(200).send({ success: "OK" });
+  
+});
+
+
 function sendEmail(schedules,amount){
   var html='Dear Student,<BR/><B>You did a schedule booking as follow</B>'
   var email='';
@@ -92,6 +97,36 @@ function sendEmail(schedules,amount){
     text: "Hello",
     html: html
 }
+transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    logger.error(error);
+  } 
+});
+}
+
+function sendSaveEmail(schedules,amount){
+  var html='Dear Student,<BR/><B>You did a schedule booking as follow</B>'
+  var email='';
+ html+='<Table><tr><th>Course</th><th>Date</th><th>From</th><th>To</th><th>Price(USD)</th></tr>'
+  schedules.forEach(function(sc){
+    html+='<tr><td>'+sc.course+'</td><td>'+sc.date+'</td><td>'+sc.fromTime+'</td><td>'+sc.toTime+'</td><td>'+sc.price+'</td></tr>';
+    email=sc.email;
+  });
+  html+='</table>'
+  html+='<br/><B>Total is:'+amount/100+' USD</B>'
+  html+='<br/><B>Please payto Sampath Bank,City Office,Acc 100159644510</B>'
+  html+='<br/><B>Contact a2ztechacademy@gmail.com or Skype:a2ztechacademy for more details</B>'
+  
+  html+='<br/>Thank You.<br/>A2ZAcademy Team'
+  var testemails=[email,'iisuru@gmail.com'];
+  let mailOptions = {
+    from: "a2ztechacademy@gmail.com",
+    to: testemails,
+    subject: "Your schedule confirmed with A2ZAcademy",
+    text: "Hello",
+    html: html
+}
+
 
 transporter.sendMail(mailOptions, function(error, info){
   if (error) {
