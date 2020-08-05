@@ -51,7 +51,7 @@ axios({
     //addCollectionData("schedules",schedules)
     clearCart()
    // history.push('/schedules')
-    alert('Your schdule saved and emailed the bank account details');
+    alert('Your schedule is saved and emailed the bank account details');
   })
   .catch(error => {
     console.log('Save Error: ', error);
@@ -113,7 +113,7 @@ cartItems.forEach(cartItem=>{
       name='Test Ltd.'
       billingAddress
       shippingAddress
-      image='https://a2z-academy-app-server.herokuapp.com/a2zlogo.png'
+      image='https://a2ztechacademy.herokuapp.com/a2zlogo.png'
       description={`Your total is $${price}`}
       amount={priceForStripe}
       panelLabel='Pay Online Now'
