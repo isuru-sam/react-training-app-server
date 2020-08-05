@@ -15,7 +15,7 @@ const CourseRequirements = ({hourlyRate}) => {
     <li>Multiple slots for same course or different courses can be schduled in a single checkout</li>
 <li>Individual subscription preferred for a session</li>
 <li>Maximum of 2 subscribers for a session</li>
-
+<li>Payments can be done via online or deposit to bank later</li>
 </ul>
 </div>
 
@@ -42,7 +42,7 @@ const CourseRequirements = ({hourlyRate}) => {
 <div>
 <h3>Support or Questions</h3>
 <ul>
-<li>Mobile/WhatsApp : 077777777</li>
+
 <li>Email:a2ztechacademy@gmail.com</li>
 <li>Skype:a2ztechacademy</li>
 

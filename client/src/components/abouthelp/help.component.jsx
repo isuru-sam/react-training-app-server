@@ -7,11 +7,11 @@ const Help=()=>{
   
    <li>
        How to get detailed course info if not sufficient?<br/>
-       Directly call 0777777 or a2ztechacademy@gmail.com
+       Directly skype call a2ztechacademy or a2ztechacademy@gmail.com
    </li><br/>
    <li>
        How to clarify anything on schdule,payments etc?<br/>
-       Directly call 077777 or email a2ztechacademy@gmail.com
+       Directly skype call a2ztechacademy or email a2ztechacademy@gmail.com
    </li><br/>
    <li>
        How to check your schdules?<br/>
@@ -31,7 +31,7 @@ const Help=()=>{
    </li><br/>
    <li>
        How to reset password?<br/>
-       Simply send an email to a2ztechacademy@gmail.com or call 077777777 for instant reset
+       Simply send an email to a2ztechacademy@gmail.com or skype call a2ztechacademy for instant reset
    </li>
    <br/>
    </ul>
