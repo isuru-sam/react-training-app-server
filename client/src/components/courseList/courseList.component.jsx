@@ -38,7 +38,7 @@ return <div className="course-list">
 {
     
     this.props.courses.map(({course,desc,imageUrl,id,subSections,hourlyRate})=>
-    (<Grid item xs={4} key={id}>
+    (<Grid item xs={12} key={id} >
         <CourseItem key={id} hourlyRate={hourlyRate} title={course} desc={desc} imageUrl={imageUrl} id={id} subSections={subSections}/>
         </Grid>))
 
