@@ -20,7 +20,7 @@
     "express": "^4.16.4",
     "express-pino-logger": "^5.0.0",
     "gmail-send": "^1.8.10",
-    "nodemailer": "^6.4.11",
+    "nodemailer": "^6.4.16",
     "pino": "^6.5.0",
     "stripe": "6.28.0"
   },
